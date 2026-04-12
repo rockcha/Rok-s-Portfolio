@@ -1,0 +1,19 @@
+:root {
+  --font-kr:
+    "Gowun Dodum", "Noto Sans KR", "Apple SD Gothic Neo", "Segoe UI", Arial,
+    sans-serif;
+
+  --bg-light: linear-gradient(180deg, #fbfcff 0%, #f1f6ff 45%, #eef9f4 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-kr);
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg-light);
+}
