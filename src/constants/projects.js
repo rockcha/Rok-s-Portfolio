@@ -108,7 +108,7 @@ export const PROJECTS = [
     link: "https://web-dkmv.vercel.app/",
     github: "https://github.com/rockcha/DKMV-Extension",
     detail: {
-      role: "익스텐션 및 웹 개발",
+      role: "익스텐션 및 웹 개발(5인)",
       period: "2025.01 - 2025.02",
       stack: ["TypeScript", "VS Code API", "Webview"],
       shortDescription:
@@ -158,7 +158,7 @@ export const PROJECTS = [
     link: "https://haru-dam.vercel.app/intro",
     github: "https://github.com/rockcha/haru-dam",
     detail: {
-      role: "프론트엔드 개발",
+      role: "프론트엔드 개발(1인)",
       period: "2025.06 - 2025.07",
       stack: ["Supabase", "TypeScript", "Tailwind CSS", "shadcn/ui"],
       shortDescription:

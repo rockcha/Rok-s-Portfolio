@@ -1,13 +1,13 @@
 ﻿import { ABOUT_CONTENT } from "../constants/aboutContent.js";
 
 export const renderAboutPage = () => `
-  <section class="card border-0 shadow-sm">
-    <div class="card-body p-4 p-md-5">
+  <section class="about-page py-2 py-md-3">
+    <div class="about-page-body px-1 px-md-2">
       <h2 class="fw-bold mb-4">${ABOUT_CONTENT.pageTitle}</h2>
 
       <div class="row g-4">
         <div class="col-12 col-md-4 text-center">
-          <div class="about-profile-card bg-light rounded-4 p-4">
+          <div class="about-profile-card p-4">
             <div class="about-profile-image-wrap mb-3">
               <img
                 class="about-profile-image"
@@ -20,6 +20,9 @@ export const renderAboutPage = () => `
             </div>
             <p class="about-greeting mb-2">${ABOUT_CONTENT.hero.greeting}</p>
             <p class="about-intro mb-3">${ABOUT_CONTENT.hero.intro}</p>
+            <a class="btn btn-success btn-sm about-skill-link mb-3" href="#about-skills">
+              기술 스택보기
+            </a>
             <p class="text-secondary mb-1 small">${ABOUT_CONTENT.hero.role}</p>
             <p class="text-secondary mb-0 small">${ABOUT_CONTENT.hero.education}</p>
           </div>
@@ -61,11 +64,12 @@ export const renderAboutPage = () => `
         </div>
       </div>
 
-      <section class="about-skills mt-5">
+      <section class="about-skills mt-5" id="about-skills">
         <h2 class="fw-bold mb-4">${ABOUT_CONTENT.skills.heading}</h2>
 
-        <h6 class="about-skills-subtitle mb-2">💻 프론트엔드</h6>
-        <div class="about-skills-list">
+        <section class="about-skill-group">
+          <h6 class="about-skills-subtitle mb-3">💻 프론트엔드</h6>
+          <div class="about-skills-list">
           ${ABOUT_CONTENT.skills.frontend
             .map(
               ({ name, description }) => `
@@ -76,10 +80,12 @@ export const renderAboutPage = () => `
           `,
             )
             .join("")}
-        </div>
+          </div>
+        </section>
 
-        <h6 class="about-skills-subtitle mb-2 mt-4">🗄️ 백엔드</h6>
-        <div class="about-skills-list">
+        <section class="about-skill-group mt-4">
+          <h6 class="about-skills-subtitle mb-3">🗄️ 백엔드</h6>
+          <div class="about-skills-list">
           ${ABOUT_CONTENT.skills.backend
             .map(
               ({ name, description }) => `
@@ -90,12 +96,15 @@ export const renderAboutPage = () => `
           `,
             )
             .join("")}
-        </div>
+          </div>
+        </section>
 
-        <h6 class="about-skills-subtitle mb-2 mt-4">🚀 배포</h6>
-        <ul class="about-deploy-list mb-0">
-          ${ABOUT_CONTENT.skills.deploy.map((name) => `<li>${name}</li>`).join("")}
-        </ul>
+        <section class="about-skill-group mt-4">
+          <h6 class="about-skills-subtitle mb-3">🚀 배포</h6>
+          <ul class="about-deploy-list mb-0">
+            ${ABOUT_CONTENT.skills.deploy.map((name) => `<li>${name}</li>`).join("")}
+          </ul>
+        </section>
       </section>
     </div>
   </section>

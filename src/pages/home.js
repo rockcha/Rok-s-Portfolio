@@ -8,6 +8,14 @@ const HOME_CAROUSEL_SPEEDS = preview.speedOptions;
 
 let homeCarouselTimer = null;
 
+const renderAnimatedChars = (text, className = "") =>
+  Array.from(text)
+    .map(
+      (char, index) =>
+        `<span class="landing-title-char ${className}" style="--char-index: ${index}">${char === " " ? "&nbsp;" : char}</span>`,
+    )
+    .join("");
+
 const getSavedHomeCarouselSpeed = () => {
   const savedSpeed = Number(
     window.localStorage.getItem(HOME_CAROUSEL_SPEED_KEY),
@@ -42,7 +50,11 @@ export const renderHomePage = () => `
 
       <div class="landing-main">
      
-        <h1>${hero.greeting} <span class="landing-highlight">${hero.highlight}</span> ${hero.nameSuffix}</h1>
+        <h1 class="landing-title" aria-label="${hero.greeting} ${hero.highlight} ${hero.nameSuffix}">
+          ${renderAnimatedChars(`${hero.greeting} `)}
+          ${renderAnimatedChars(hero.highlight, "landing-highlight")}
+          ${renderAnimatedChars(` ${hero.nameSuffix}`)}
+        </h1>
 
         <dl class="landing-meta">
           ${hero.meta

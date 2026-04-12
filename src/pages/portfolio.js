@@ -1,5 +1,21 @@
 ﻿import { PROJECTS } from "../constants/projects.js";
 
+const deployIcon = `
+  <svg class="project-link-icon project-link-icon--line" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 3.5c2.4 1.5 4 4.1 4 7 0 1.9-.7 3.7-1.8 5.1l.8 3.4-3-1.7-3 1.7.8-3.4C8.7 14.2 8 12.4 8 10.5c0-2.9 1.6-5.5 4-7Z" />
+    <path d="M12 3.5v13.8" />
+    <path d="M9.2 15.7 6.4 18.5" />
+    <path d="M14.8 15.7l2.8 2.8" />
+    <circle cx="12" cy="9" r="1.7" />
+  </svg>
+`;
+
+const githubIcon = `
+  <svg class="project-link-icon project-link-icon--fill" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 2.8a9.2 9.2 0 0 0-2.9 17.9c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 0 1.6 1.1 1.6 1.1.9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.3-2.2-.3-4.6-1.1-4.6-4.6 0-1 .4-1.9 1.1-2.6-.1-.3-.5-1.3.1-2.6 0 0 .9-.3 2.8 1.1a9.7 9.7 0 0 1 5.1 0c1.9-1.4 2.8-1.1 2.8-1.1.6 1.3.2 2.3.1 2.6.7.7 1.1 1.6 1.1 2.6 0 3.6-2.4 4.4-4.6 4.6.4.3.7.9.7 1.8v2.5c0 .3.2.6.7.5A9.2 9.2 0 0 0 12 2.8Z" />
+  </svg>
+`;
+
 const renderSideNav = () => `
   <nav class="pf-sidenav" id="pf-sidenav" aria-label="프로젝트 네비게이션">
     <ul class="pf-sidenav-list">
@@ -37,9 +53,21 @@ const renderProjectInfoContent = ({ link, github, detail }) => `
       ${detail.stack.join(" · ")}
     </li>
   </ul>
-  <div class="d-flex gap-2 mt-3">
-    <a href="${link}" class="btn btn-success btn-sm" target="_blank" rel="noopener noreferrer"> 바로가기</a>
-    <a href="${github}" class="btn btn-outline-secondary btn-sm" target="_blank" rel="noopener noreferrer">GitHub</a>
+  <div class="project-link-list mt-3">
+    <a href="${link}" class="project-link-item" target="_blank" rel="noopener noreferrer">
+      <span class="project-link-label">
+        ${deployIcon}
+        배포 사이트
+      </span>
+      <span class="project-link-url">${link}</span>
+    </a>
+    <a href="${github}" class="project-link-item" target="_blank" rel="noopener noreferrer">
+      <span class="project-link-label">
+        ${githubIcon}
+        깃허브
+      </span>
+      <span class="project-link-url">${github}</span>
+    </a>
   </div>
 `;
 
@@ -222,7 +250,7 @@ const renderDetail = ({
       <div class="col-12 col-md-8">
         <div class="detail-section detail-section--separated">
           <h6 class="detail-block-title">🎬 소개 영상</h6>
-          <div class="detail-video-wrap">
+          <div class="detail-video-wrap is-loading">
             <video
               class="detail-video"
               controls
@@ -355,6 +383,27 @@ export const initPortfolioPage = () => {
     "portfolio-image-dialog-caption",
   );
   const closeBtn = document.querySelector("[data-dialog-close]");
+
+  document.querySelectorAll(".detail-video-wrap").forEach((wrap) => {
+    const video = wrap.querySelector("video");
+
+    if (!(video instanceof HTMLVideoElement)) {
+      wrap.classList.remove("is-loading");
+      return;
+    }
+
+    const markLoaded = () => {
+      wrap.classList.remove("is-loading");
+    };
+
+    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+      markLoaded();
+    } else {
+      video.addEventListener("loadedmetadata", markLoaded, { once: true });
+      video.addEventListener("canplay", markLoaded, { once: true });
+      video.addEventListener("error", markLoaded, { once: true });
+    }
+  });
 
   if (
     dialog instanceof HTMLDialogElement &&

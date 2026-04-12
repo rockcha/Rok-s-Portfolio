@@ -135,10 +135,56 @@
 }
 
 .detail-video-wrap {
+  position: relative;
   border-radius: 0.75rem;
   overflow: hidden;
   background: #000;
   border: 1px solid #e9ecef;
+}
+
+.detail-video-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.42),
+      transparent
+    ),
+    linear-gradient(135deg, #edf5ef 0%, #f7faf8 45%, #e5f0e9 100%);
+  background-size:
+    220% 100%,
+    100% 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.detail-video-wrap::after {
+  content: "영상 로딩 중";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  color: #5b6e62;
+  font-size: 0.9rem;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.25s ease;
+}
+
+.detail-video-wrap.is-loading::before {
+  opacity: 1;
+  animation: video-skeleton-sheen 1.5s ease-in-out infinite;
+}
+
+.detail-video-wrap.is-loading::after {
+  opacity: 1;
 }
 
 .detail-video {
@@ -146,6 +192,20 @@
   height: auto;
   max-height: 400px;
   display: block;
+}
+
+@keyframes video-skeleton-sheen {
+  0% {
+    background-position:
+      120% 0,
+      0 0;
+  }
+
+  100% {
+    background-position:
+      -120% 0,
+      0 0;
+  }
 }
 
 .detail-introduction-image-wrap {
@@ -191,6 +251,71 @@
   margin-bottom: 1rem;
 }
 
+.project-link-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.project-link-item {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #d1e7dd;
+  border-radius: 0.5rem;
+  background: #f8fffb;
+  color: #212529;
+  text-decoration: none;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.project-link-item:hover {
+  border-color: #198754;
+  background: #edf8f1;
+  transform: translateY(-1px);
+}
+
+.project-link-item:focus-visible {
+  outline: 2px solid #198754;
+  outline-offset: 2px;
+}
+
+.project-link-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #198754;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.project-link-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+.project-link-icon--line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.project-link-icon--fill {
+  fill: currentColor;
+}
+
+.project-link-url {
+  color: #495057;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
 .detail-section {
   padding: 0.25rem 0;
 }
@@ -223,6 +348,27 @@
 
 .ts-label {
   line-height: 1.6;
+}
+
+.portfolio-detail .detail-section > .text-secondary.small {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.portfolio-detail .detail-section > .detail-block-title {
+  font-size: 1.15rem;
+}
+
+.portfolio-detail .ts-title {
+  font-size: 1.08rem;
+}
+
+.portfolio-detail .ts-label {
+  font-size: 1.05rem;
+}
+
+.portfolio-detail .ts-note-title {
+  font-size: 0.9rem;
 }
 
 .main-feature-grid {
@@ -427,5 +573,11 @@
 @media (max-width: 1199px) {
   .pf-project-info-panel {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-video-wrap.is-loading::before {
+    animation: none;
   }
 }

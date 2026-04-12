@@ -63,9 +63,9 @@ export const HOME_CONTENT = {
       "/images/thumb/portfolio4.png",
     ],
     speedOptions: [
-      { label: "빠르게", value: 2000 },
-      { label: "기본", value: 3000 },
       { label: "느리게", value: 5000 },
+      { label: "기본", value: 3000 },
+      { label: "빠르게", value: 2000 },
     ],
     defaultSpeed: 3000,
   },
