@@ -155,7 +155,7 @@ export const PROJECTS = [
     key: "harudam",
     summary:
       "할 일/일정/메모/음악/일기까지 관리하는 멀티기능 일정 관리 서비스입니다.",
-    link: "https://haru-dam.vercel.app/intro",
+    link: "https://haru-dam.vercel.app/",
     github: "https://github.com/rockcha/haru-dam",
     detail: {
       role: "프론트엔드 개발(1인)",
