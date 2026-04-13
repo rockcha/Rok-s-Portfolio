@@ -12,6 +12,15 @@ const normalizePath = (path) => {
   return path;
 };
 
+const scrollToTop = () => {
+  const root = document.documentElement;
+  const previousScrollBehavior = root.style.scrollBehavior;
+
+  root.style.scrollBehavior = "auto";
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  root.style.scrollBehavior = previousScrollBehavior;
+};
+
 export const createRouter = ({ root, routes, renderLayout }) => {
   const routeTable = new Map(routes.map((route) => [route.path, route]));
 
@@ -30,6 +39,8 @@ export const createRouter = ({ root, routes, renderLayout }) => {
     if (typeof currentRoute.afterRender === "function") {
       currentRoute.afterRender();
     }
+
+    scrollToTop();
   };
 
   const onClick = (event) => {
