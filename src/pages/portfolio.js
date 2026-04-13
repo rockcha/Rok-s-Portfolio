@@ -48,6 +48,7 @@ const renderSideNav = () => `
 const renderProjectInfoContent = ({ link, github, detail }) => `
   <ul class="list-unstyled small text-secondary mb-0">
     <li class="mb-2"><span class="fw-medium text-dark">역할</span><br>${detail.role}</li>
+    <li class="mb-2"><span class="fw-medium text-dark">기간</span><br>${detail.period}</li>
     <li class="mb-2">
       <span class="fw-medium text-dark">기술 스택</span><br>
       ${detail.stack.join(" · ")}
@@ -250,7 +251,7 @@ const renderDetail = ({
       <div class="col-12 col-md-8">
         <div class="detail-section detail-section--separated">
           <h6 class="detail-block-title">🎬 소개 영상</h6>
-          <div class="detail-video-wrap is-loading">
+          <div class="detail-video-wrap">
             <video
               class="detail-video"
               controls
@@ -266,7 +267,7 @@ const renderDetail = ({
 
         <div class="detail-section detail-section--separated">
           <h6 class="detail-block-title">📌 프로젝트 소개</h6>
-          <p class="text-secondary small mb-0">${detail.shortDescription}</p>
+          <p class="portfolio-detail-body portfolio-detail-summary text-secondary small mb-0">${detail.shortDescription}</p>
         </div>
 
         ${renderIntroductionImage(introductionImage || detail.introductionImage, title)}
@@ -383,27 +384,6 @@ export const initPortfolioPage = () => {
     "portfolio-image-dialog-caption",
   );
   const closeBtn = document.querySelector("[data-dialog-close]");
-
-  document.querySelectorAll(".detail-video-wrap").forEach((wrap) => {
-    const video = wrap.querySelector("video");
-
-    if (!(video instanceof HTMLVideoElement)) {
-      wrap.classList.remove("is-loading");
-      return;
-    }
-
-    const markLoaded = () => {
-      wrap.classList.remove("is-loading");
-    };
-
-    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
-      markLoaded();
-    } else {
-      video.addEventListener("loadedmetadata", markLoaded, { once: true });
-      video.addEventListener("canplay", markLoaded, { once: true });
-      video.addEventListener("error", markLoaded, { once: true });
-    }
-  });
 
   if (
     dialog instanceof HTMLDialogElement &&
