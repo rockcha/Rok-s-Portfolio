@@ -19,12 +19,11 @@ const getTodayName = () =>
 const renderSiteNotice = () => `
   <aside class="site-notice" data-site-notice aria-label="방문 안내">
     <p class="site-notice-eyebrow mb-2">NOTICE</p>
-    <p class="site-notice-title mb-2">안녕하세요 이곳에 온 모든 분들 환영합니다! ✨</p>
+    <p class="site-notice-title mb-2">안녕하세요!! 환영합니다!! ✨</p>
+ 
     <p class="site-notice-text mb-0">
-      오늘은 즐거운 <strong>${getTodayName()}</strong>입니다.
-    </p>
-    <p class="site-notice-text mb-0">
-      이 공간은 Vanilla JavaScript와 Bootstrap을 기반으로 깔끔하고 담백한 디자인을 구현하여, 편안하고 직관적인 사용자 경험을 제공하고자 했습니다.
+      Vanilla JavaScript와 Bootstrap을 기반으로 깔끔하고 담백한 디자인을 구현하여, 관심을 가져주신 모든 분들께 직관적이고 편안한 사용자 경험을 제공하고자 했습니다.
+      <br/> 이곳에 머무는 동안에는 작은 버그 하나라도 발생하지 않기를 바라며, 행복한  <strong>${getTodayName()}</strong>이 되었으면 좋겠습니다!
     </p>
     <div class="site-notice-actions">
       <label class="site-notice-check">
