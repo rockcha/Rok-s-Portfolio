@@ -1,3 +1,80 @@
+const SITE_NOTICE_HIDE_KEY = "siteNoticeHiddenDate";
+const SITE_NOTICE_DISMISSED_EVENT = "site-notice-dismiss";
+let siteNoticeDismissedForSession = false;
+
+const getTodayKey = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const date = String(now.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${date}`;
+};
+
+const getTodayName = () =>
+  ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"][
+    new Date().getDay()
+  ];
+
+const renderSiteNotice = () => `
+  <aside class="site-notice" data-site-notice aria-label="방문 안내">
+    <p class="site-notice-eyebrow mb-2">NOTICE</p>
+    <p class="site-notice-title mb-2">안녕하세요 이곳에 온 모든 분들 환영합니다! ✨</p>
+    <p class="site-notice-text mb-0">
+      오늘은 즐거운 <strong>${getTodayName()}</strong>입니다.
+    </p>
+    <p class="site-notice-text mb-0">
+      이 공간은 Vanilla JavaScript와 Bootstrap을 기반으로 깔끔하고 담백한 디자인을 구현하여, 편안하고 직관적인 사용자 경험을 제공하고자 했습니다.
+    </p>
+    <div class="site-notice-actions">
+      <label class="site-notice-check">
+        <input type="checkbox" data-site-notice-hide-today />
+        <span>오늘 하루 안보기</span>
+      </label>
+      <button type="button" class="btn btn-success btn-sm" data-site-notice-close>
+        응원하면서 닫기
+      </button>
+    </div>
+  </aside>
+`;
+
+export const initAppLayout = () => {
+  const notice = document.querySelector("[data-site-notice]");
+
+  if (!(notice instanceof HTMLElement)) {
+    return;
+  }
+
+  const todayKey = getTodayKey();
+  const hiddenDate = window.localStorage.getItem(SITE_NOTICE_HIDE_KEY);
+  const shouldHide = siteNoticeDismissedForSession || hiddenDate === todayKey;
+
+  notice.classList.toggle("is-visible", !shouldHide);
+
+  const closeNotice = () => {
+    siteNoticeDismissedForSession = true;
+    notice.classList.remove("is-visible");
+    notice.dispatchEvent(new CustomEvent(SITE_NOTICE_DISMISSED_EVENT));
+  };
+
+  notice
+    .querySelector("[data-site-notice-close]")
+    ?.addEventListener("click", closeNotice);
+
+  const hideTodayInput = notice.querySelector("[data-site-notice-hide-today]");
+
+  if (hideTodayInput instanceof HTMLInputElement) {
+    hideTodayInput.addEventListener("change", () => {
+      if (!hideTodayInput.checked) {
+        return;
+      }
+
+      window.localStorage.setItem(SITE_NOTICE_HIDE_KEY, todayKey);
+      closeNotice();
+    });
+  }
+};
+
 export const renderAppLayout = ({ path, content }) => {
   const isActive = (routePath) =>
     path === routePath ? "nav-link active fw-semibold" : "nav-link";
@@ -34,6 +111,7 @@ export const renderAppLayout = ({ path, content }) => {
       <main class="container py-4 py-md-5">
         ${content}
       </main>
+      ${renderSiteNotice()}
     </div>
   `;
 };

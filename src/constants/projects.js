@@ -53,7 +53,7 @@ export const PROJECTS = [
     github: "https://github.com/rockcha/orbit",
     detail: {
       role: "프론트엔드 개발 (1인)",
-      period: "2025.03 - 2025.04",
+      period: "2026.03 - 2026.03",
       stack: [
         "React",
         "TanStack Query",
@@ -109,7 +109,7 @@ export const PROJECTS = [
     github: "https://github.com/rockcha/DKMV-Extension",
     detail: {
       role: "익스텐션 및 웹 개발(5인)",
-      period: "2025.01 - 2025.02",
+      period: "2025.10 - 2025.12",
       stack: ["TypeScript", "VS Code API", "Webview"],
       shortDescription:
         "DKMV는 AI가 생성한 코드의 품질을 점수로 정량화하고, 리뷰와 개선 코드까지 함께 제공하여 사용자가 자신의 AI 코딩 실력을 점검하고 웹 대시보드를 이용하여 지속적으로 성장할 수 있게 돕는 서비스입니다. 현재는 서버가 닫혀서, 정상 작동하지 않을 수 있으나, 녹화된 영상으로 사용법을 확인하실 수 있습니다.",
@@ -159,7 +159,7 @@ export const PROJECTS = [
     github: "https://github.com/rockcha/haru-dam",
     detail: {
       role: "프론트엔드 개발(1인)",
-      period: "2025.06 - 2025.07",
+      period: "2026.03 - 2026.04",
       stack: ["Supabase", "TypeScript", "Tailwind CSS", "shadcn/ui"],
       shortDescription:
         "하루하루의 내용을 이 웹 페이지에 담아낸다는 의미로 만든 서비스이며, Supabase에 오늘의 할 일, 일정, 나의 음악, 메모, 일기 데이터를 저장하고 조회/추가/수정/삭제(CRUD)할 수 있는 멀티기능 일정 페이지이며, 반응형 레이아웃과 깔끔한 디자인 완성도에 집중한 프로젝트입니다. 지인들의 사용 후기로 지속적인 피드백을 받아 기능의 다양성과 UX를 개선하고 있습니다. ",

@@ -21,7 +21,7 @@ const scrollToTop = () => {
   root.style.scrollBehavior = previousScrollBehavior;
 };
 
-export const createRouter = ({ root, routes, renderLayout }) => {
+export const createRouter = ({ root, routes, renderLayout, afterLayoutRender }) => {
   const routeTable = new Map(routes.map((route) => [route.path, route]));
 
   const render = () => {
@@ -35,6 +35,10 @@ export const createRouter = ({ root, routes, renderLayout }) => {
     const content = currentRoute.render();
     mount(root, renderLayout({ path, content }));
     document.title = currentRoute.title || "정록's Portfolio";
+
+    if (typeof afterLayoutRender === "function") {
+      afterLayoutRender();
+    }
 
     if (typeof currentRoute.afterRender === "function") {
       currentRoute.afterRender();

@@ -68,7 +68,7 @@ export const ABOUT_CONTENT = {
     },
   ],
   skills: {
-    heading: "🛠 기술 스택",
+    heading: "🧩 기술 스택",
     frontend: [
       {
         name: "HTML",
@@ -86,12 +86,12 @@ export const ABOUT_CONTENT = {
           "타입 기반 설계를 적용해 런타임 오류를 줄이고, 인터페이스와 타입 추론을 활용해 유지보수하기 쉬운 코드를 작성할 수 있습니다.",
       },
       {
-        name: "React.js",
+        name: "React",
         description:
           "Context API, Zustand와 middleware를 통한 전역 상태 관리와 React Query를 통한 서버 상태 관리를 할 수 있습니다. 커스텀 훅을 적극적으로 활용해 재사용성 및 UI 로직과 비즈니스, 데이터 로직 분리를 지향합니다.",
       },
       {
-        name: "Next.js",
+        name: "Next",
         description:
           "라우팅과 데이터 패칭 구조를 이해하고 있으며, SSR과 SEO 관점에서 초기 렌더링 품질을 고려한 페이지를 구성할 수 있습니다.",
       },

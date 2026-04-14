@@ -260,6 +260,12 @@
   font-size: 0.9rem;
 }
 
+.home-carousel-speed-hint {
+  color: #6c757d;
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
 .home-carousel-track {
   display: flex;
   width: 100%;
@@ -342,6 +348,10 @@
   .home-carousel-toolbar {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .home-carousel-speed-hint {
+    white-space: normal;
   }
 }
 

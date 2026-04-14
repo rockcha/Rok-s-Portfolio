@@ -45,17 +45,33 @@ const renderSideNav = () => `
   </nav>
 `;
 
-const renderProjectInfoContent = ({ link, github, detail }) => `
-  <ul class="list-unstyled small text-secondary mb-0">
-    <li class="mb-2"><span class="fw-medium text-dark">역할</span><br>${detail.role}</li>
-    <li class="mb-2"><span class="fw-medium text-dark">기간</span><br>${detail.period}</li>
-    <li class="mb-2">
-      <span class="fw-medium text-dark">기술 스택</span><br>
-      ${detail.stack.join(" · ")}
+const renderProjectInfoContent = ({ key, link, github, detail }) => `
+  <ul class="project-meta-list list-unstyled mb-0">
+    <li class="project-meta-item">
+      <span class="project-meta-label">역할</span>
+      <span class="project-meta-value">${detail.role}</span>
+    </li>
+    <li class="project-meta-item">
+      <span class="project-meta-label">기간</span>
+      <span class="project-meta-value">${detail.period}</span>
+    </li>
+    <li class="project-meta-item project-meta-item--stack">
+      <span class="project-meta-label">기술 스택</span>
+      <span class="project-stack-list">
+        ${detail.stack
+          .map((stack) => `<span class="project-stack-tag">${stack}</span>`)
+          .join("")}
+      </span>
     </li>
   </ul>
   <div class="project-link-list mt-3">
-    <a href="${link}" class="project-link-item" target="_blank" rel="noopener noreferrer">
+    <a
+      href="${link}"
+      class="project-link-item"
+      target="_blank"
+      rel="noopener noreferrer"
+      ${key === "dkmv" ? 'data-deploy-warning="dkmv"' : ""}
+    >
       <span class="project-link-label">
         ${deployIcon}
         배포 사이트
@@ -92,7 +108,13 @@ const getCardThumbPath = (id) => `/images/thumb/portfolio${id}.png`;
 
 const renderCard = ({ id, logoName, summary, title }) => `
   <div class="col-12 col-sm-6 col-lg-3">
-    <div class="card h-100 border-0 shadow-sm">
+    <div
+      class="card h-100 border-0 shadow-sm portfolio-project-card"
+      role="button"
+      tabindex="0"
+      data-scroll-to="project-${id}"
+      aria-label="${title} 자세히 보기로 이동"
+    >
       <div class="portfolio-card-thumb-wrap">
         <img
           src="${getCardThumbPath(id)}"
@@ -104,12 +126,8 @@ const renderCard = ({ id, logoName, summary, title }) => `
         <p class="portfolio-card-thumb-fallback mb-0">이미지를 준비 중입니다.</p>
       </div>
       <div class="card-body d-flex flex-column p-4">
-        <h5 class="fw-bold mb-2">${logoName}</h5>
-        <p class="text-secondary small mb-3">${summary}</p>
-        <button
-          class="btn btn-outline-success btn-sm mt-auto"
-          data-scroll-to="project-${id}"
-        >자세히 보기</button>
+        <h5 class="portfolio-card-title fw-bold mb-2">${logoName}</h5>
+        <p class="text-secondary small mb-0">${summary}</p>
       </div>
     </div>
   </div>
@@ -155,6 +173,25 @@ const renderImageDialog = () => `
     <button type="button" class="portfolio-dialog-close" data-dialog-close aria-label="닫기">×</button>
     <img id="portfolio-image-dialog-img" class="portfolio-dialog-img" alt="" />
     <p id="portfolio-image-dialog-caption" class="portfolio-dialog-caption mb-0"></p>
+  </dialog>
+`;
+
+const renderDeployWarningDialog = () => `
+  <dialog id="deploy-warning-dialog" class="deploy-warning-dialog">
+    <div class="deploy-warning-content">
+      <h5 class="deploy-warning-title">배포 사이트 안내</h5>
+      <p class="deploy-warning-message">
+        현재 프로젝트 서버가 운영 중이지 않아 회원가입 및 일부 데이터 표시가 정상적으로 동작하지 않을 수 있습니다. 계속 이동하시겠습니까?
+      </p>
+      <div class="deploy-warning-actions">
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-deploy-cancel>
+          취소
+        </button>
+        <button type="button" class="btn btn-success btn-sm" data-deploy-confirm>
+          확인
+        </button>
+      </div>
+    </div>
   </dialog>
 `;
 
@@ -244,7 +281,7 @@ const renderDetail = ({
 }) => `
   <section id="project-${id}" class="portfolio-detail mt-5 pt-4 border-top">
     <div class="mb-4">
-      <h3 class="fw-bold mb-0">${title}</h3>
+      <h3 class="portfolio-project-title fw-bold mb-0">${title}</h3>
     </div>
 
     <div class="row g-4">
@@ -290,7 +327,7 @@ const renderDetail = ({
           <div class="detail-info-heading">
             <h6 class="detail-block-title mb-0">ℹ️ 프로젝트 정보</h6>
           </div>
-          ${renderProjectInfoContent({ link, github, detail })}
+          ${renderProjectInfoContent({ key, link, github, detail })}
         </div>
       </div>
     </div>
@@ -302,15 +339,16 @@ export const renderPortfolioPage = () => `
   ${renderFixedProjectInfo()}
   <section id="portfolio-top">
     <div class="mb-4 pb-2 border-bottom">
-      <h2 class="fw-bold mb-1">포트폴리오</h2>
+      <h2 class="portfolio-page-title fw-bold mb-1">포트폴리오</h2>
       <p class="text-secondary mb-0">핵심 프로젝트만 간단히 모아봤습니다.</p>
     </div>
    
     <div class="row g-4">
-      ${PROJECTS.map(renderCard).join("")}
+  ${PROJECTS.map(renderCard).join("")}
     </div>
   </section>
   ${PROJECTS.map(renderDetail).join("")}
+  ${renderDeployWarningDialog()}
   ${renderImageDialog()}
 `;
 
@@ -338,12 +376,20 @@ export const initPortfolioPage = () => {
     });
   };
 
-  // 자세히 보기 버튼 스크롤
-  document.querySelectorAll("[data-scroll-to]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      setActive(btn.dataset.scrollTo);
-      const target = document.getElementById(btn.dataset.scrollTo);
+  // 프로젝트 카드 클릭 스크롤
+  document.querySelectorAll("[data-scroll-to]").forEach((trigger) => {
+    const scrollToProject = () => {
+      setActive(trigger.dataset.scrollTo);
+      const target = document.getElementById(trigger.dataset.scrollTo);
       if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    trigger.addEventListener("click", scrollToProject);
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        scrollToProject();
+      }
     });
   });
 
@@ -376,6 +422,43 @@ export const initPortfolioPage = () => {
   });
 
   setActive("portfolio-top");
+
+  const deployWarningDialog = document.getElementById("deploy-warning-dialog");
+  const deployConfirmBtn = document.querySelector("[data-deploy-confirm]");
+  const deployCancelBtn = document.querySelector("[data-deploy-cancel]");
+  let pendingDeployHref = "";
+
+  if (
+    deployWarningDialog instanceof HTMLDialogElement &&
+    deployConfirmBtn instanceof HTMLButtonElement &&
+    deployCancelBtn instanceof HTMLButtonElement
+  ) {
+    document.querySelectorAll("[data-deploy-warning]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (!(link instanceof HTMLAnchorElement)) {
+          return;
+        }
+
+        event.preventDefault();
+        pendingDeployHref = link.href;
+        deployWarningDialog.showModal();
+      });
+    });
+
+    deployCancelBtn.addEventListener("click", () => {
+      pendingDeployHref = "";
+      deployWarningDialog.close();
+    });
+
+    deployConfirmBtn.addEventListener("click", () => {
+      if (pendingDeployHref) {
+        window.open(pendingDeployHref, "_blank", "noopener,noreferrer");
+      }
+
+      pendingDeployHref = "";
+      deployWarningDialog.close();
+    });
+  }
 
   // 이미지 클릭 시 다이얼로그 미리보기
   const dialog = document.getElementById("portfolio-image-dialog");

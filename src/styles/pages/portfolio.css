@@ -74,6 +74,18 @@
   scroll-margin-top: 80px; /* 헤더 높이에 맞게 조정 */
 }
 
+.portfolio-page-title {
+  letter-spacing: 0;
+}
+
+.portfolio-project-title {
+  line-height: 1.35;
+}
+
+.portfolio-card-title {
+  line-height: 1.35;
+}
+
 .portfolio-intro-preview {
   position: relative;
   border-radius: 0.75rem;
@@ -107,9 +119,27 @@
 
 .portfolio-card-thumb-wrap {
   position: relative;
+  overflow: hidden;
   border-bottom: 1px solid #eef1f4;
   background: #f8f9fa;
   min-height: 180px;
+}
+
+.portfolio-project-card {
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.portfolio-project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+.portfolio-project-card:focus-visible {
+  outline: 2px solid #198754;
+  outline-offset: 3px;
 }
 
 .portfolio-card-thumb {
@@ -117,6 +147,12 @@
   height: 180px;
   object-fit: cover;
   display: block;
+  transition: transform 0.25s ease;
+}
+
+.portfolio-project-card:hover .portfolio-card-thumb,
+.portfolio-project-card:focus-visible .portfolio-card-thumb {
+  transform: scale(1.05);
 }
 
 .portfolio-card-thumb-fallback {
@@ -251,6 +287,56 @@
   margin-bottom: 1rem;
 }
 
+.project-meta-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.project-meta-item {
+  display: grid;
+  gap: 0.3rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #eef1f4;
+}
+
+.project-meta-item:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.project-meta-label {
+  color: #198754;
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.project-meta-value {
+  color: #343a40;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.project-stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.project-stack-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0.28rem 0.55rem;
+  border: 1px solid #d1e7dd;
+  border-radius: 0.45rem;
+  background: #f8fffb;
+  color: #1f6f43;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
 .project-link-list {
   display: grid;
   gap: 0.5rem;
@@ -317,7 +403,7 @@
 }
 
 .detail-section {
-  padding: 0.25rem 0;
+  padding: 0.25rem 0 0.25rem clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
 .detail-section--separated {
@@ -333,6 +419,7 @@
   letter-spacing: 0.05em;
   color: #198754;
   margin-bottom: 0.75rem;
+  line-height: 1.35;
 }
 
 .ts-item + .ts-item {
@@ -344,6 +431,9 @@
 .ts-title {
   color: #212529;
   font-size: 0.9rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid #ced4da;
+  line-height: 1.45;
 }
 
 .ts-label {
@@ -404,6 +494,7 @@
 .ts-note {
   border: 1px solid #e9ecef;
   border-radius: 0.65rem;
+  margin-left: 1rem;
   padding: 0.6rem 0.75rem;
 }
 
@@ -485,6 +576,49 @@
   background: rgba(0, 0, 0, 0.65);
 }
 
+.deploy-warning-dialog {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 8px;
+  padding: 0;
+  width: min(92vw, 420px);
+  max-width: 420px;
+  margin: 0;
+  background: #ffffff;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+}
+
+.deploy-warning-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.deploy-warning-content {
+  padding: 1.25rem;
+}
+
+.deploy-warning-title {
+  margin: 0 0 0.6rem;
+  color: #212529;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.deploy-warning-message {
+  margin: 0;
+  color: #495057;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.deploy-warning-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
 .portfolio-dialog-close {
   border: 0;
   background: #f1f3f5;
@@ -521,6 +655,16 @@
 
   .portfolio-evidence-img {
     max-width: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .detail-section {
+    padding-left: 0.5rem;
+  }
+
+  .ts-note {
+    margin-left: 0.5rem;
   }
 }
 

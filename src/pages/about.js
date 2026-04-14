@@ -1,5 +1,18 @@
 ﻿import { ABOUT_CONTENT } from "../constants/aboutContent.js";
 
+const DEPLOY_DESCRIPTIONS = {
+  Vercel: "React와 Next 프로젝트 배포, 환경 변수 관리, Git 연동 CI/CD 흐름에 사용했습니다.",
+  Netlify: "정적 웹 사이트 배포와 빠른 프리뷰 확인에 사용했습니다.",
+  AWS: "클라우드 서비스 구조와 배포 환경을 이해하는 데 활용했습니다.",
+};
+
+const renderSkillItem = ({ name, description }) => `
+  <div class="about-skill-item">
+    <p class="about-skill-name mb-1">${name}</p>
+    <p class="text-secondary mb-0">${description}</p>
+  </div>
+`;
+
 export const renderAboutPage = () => `
   <section class="about-page py-2 py-md-3">
     <div class="about-page-body px-1 px-md-2">
@@ -65,45 +78,33 @@ export const renderAboutPage = () => `
       </div>
 
       <section class="about-skills mt-5" id="about-skills">
-        <h2 class="fw-bold mb-4">${ABOUT_CONTENT.skills.heading}</h2>
+        <h2 class="about-skills-heading fw-bold mb-4">${ABOUT_CONTENT.skills.heading}</h2>
 
         <section class="about-skill-group">
-          <h6 class="about-skills-subtitle mb-3">💻 프론트엔드</h6>
           <div class="about-skills-list">
-          ${ABOUT_CONTENT.skills.frontend
-            .map(
-              ({ name, description }) => `
-            <div class="about-skill-item">
-              <p class="about-skill-name mb-1">${name}</p>
-              <p class="text-secondary mb-0">${description}</p>
-            </div>
-          `,
-            )
-            .join("")}
+            ${ABOUT_CONTENT.skills.frontend.map(renderSkillItem).join("")}
           </div>
         </section>
 
-        <section class="about-skill-group mt-4">
-          <h6 class="about-skills-subtitle mb-3">🗄️ 백엔드</h6>
+        <section class="about-skill-group">
           <div class="about-skills-list">
-          ${ABOUT_CONTENT.skills.backend
-            .map(
-              ({ name, description }) => `
-            <div class="about-skill-item">
-              <p class="about-skill-name mb-1">${name}</p>
-              <p class="text-secondary mb-0">${description}</p>
-            </div>
-          `,
-            )
-            .join("")}
+            ${ABOUT_CONTENT.skills.backend.map(renderSkillItem).join("")}
           </div>
         </section>
 
-        <section class="about-skill-group mt-4">
-          <h6 class="about-skills-subtitle mb-3">🚀 배포</h6>
-          <ul class="about-deploy-list mb-0">
-            ${ABOUT_CONTENT.skills.deploy.map((name) => `<li>${name}</li>`).join("")}
-          </ul>
+        <section class="about-skill-group">
+          <div class="about-skills-list">
+            ${ABOUT_CONTENT.skills.deploy
+              .map((name) =>
+                renderSkillItem({
+                  name,
+                  description:
+                    DEPLOY_DESCRIPTIONS[name] ||
+                    "프로젝트 배포와 운영 환경 확인에 사용했습니다.",
+                }),
+              )
+              .join("")}
+          </div>
         </section>
       </section>
     </div>

@@ -30,7 +30,7 @@ export const HOME_CONTENT = {
     ],
   },
   intro: {
-    title: "간단한 소개",
+    title: "저는,",
     ctaLabel: "소개페이지로",
     blocks: [
       {

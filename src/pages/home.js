@@ -33,6 +33,8 @@ const stopHomeCarousel = () => {
   }
 };
 
+const formatSpeedHint = (speed) => `${speed / 1000}초마다 전환`;
+
 export const renderHomePage = () => `
   <section class="landing-hero">
     <div class="landing-grid">
@@ -136,6 +138,9 @@ export const renderHomePage = () => `
         `,
         ).join("")}
       </select>
+      <span class="home-carousel-speed-hint" data-home-carousel-speed-hint>
+        ${formatSpeedHint(DEFAULT_HOME_CAROUSEL_SPEED)}
+      </span>
     </div>
     <div class="home-carousel" aria-label="포트폴리오 미리보기 캐러셀">
       <div class="home-carousel-track" data-home-carousel-track>
@@ -174,10 +179,19 @@ export const initHomePage = () => {
   let currentIndex = 0;
   let currentSpeed = getSavedHomeCarouselSpeed();
   const speedSelect = document.querySelector("[data-home-carousel-speed]");
+  const speedHint = document.querySelector("[data-home-carousel-speed-hint]");
+
+  const updateSpeedHint = () => {
+    if (speedHint instanceof HTMLElement) {
+      speedHint.textContent = formatSpeedHint(currentSpeed);
+    }
+  };
 
   if (speedSelect instanceof HTMLSelectElement) {
     speedSelect.value = String(currentSpeed);
   }
+
+  updateSpeedHint();
 
   const showSlide = (index) => {
     const safeIndex = (index + slides.length) % slides.length;
@@ -209,6 +223,7 @@ export const initHomePage = () => {
         HOME_CAROUSEL_SPEED_KEY,
         String(currentSpeed),
       );
+      updateSpeedHint();
       startCarousel();
     });
   }
