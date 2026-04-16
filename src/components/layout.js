@@ -1,3 +1,5 @@
+import { DAY_NAMES, SITE_NOTICE_CONTENT } from "../constants/noticeContent.js";
+
 const SITE_NOTICE_HIDE_KEY = "siteNoticeHiddenDate";
 const SITE_NOTICE_DISMISSED_EVENT = "site-notice-dismiss";
 let siteNoticeDismissedForSession = false;
@@ -11,27 +13,24 @@ const getTodayKey = () => {
   return `${year}-${month}-${date}`;
 };
 
-const getTodayName = () =>
-  ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"][
-    new Date().getDay()
-  ];
+const getTodayName = () => DAY_NAMES[new Date().getDay()];
 
 const renderSiteNotice = () => `
-  <aside class="site-notice" data-site-notice aria-label="방문 안내">
-    <p class="site-notice-eyebrow mb-2">NOTICE</p>
-    <p class="site-notice-title mb-2">안녕하세요!! 환영합니다!! ✨</p>
+  <aside class="site-notice" data-site-notice aria-label="${SITE_NOTICE_CONTENT.ariaLabel}">
+    <p class="site-notice-eyebrow mb-2">${SITE_NOTICE_CONTENT.eyebrow}</p>
+    <p class="site-notice-title mb-2">${SITE_NOTICE_CONTENT.title}</p>
  
     <p class="site-notice-text mb-0">
-      Vanilla JavaScript와 Bootstrap을 기반으로 깔끔하고 담백한 디자인을 구현하여, 관심을 가져주신 모든 분들께 직관적이고 편안한 사용자 경험을 제공하고자 했습니다.
-      <br/> 이곳에 머무는 동안에는 작은 버그 하나라도 발생하지 않기를 바라며, 행복한  <strong>${getTodayName()}</strong>이 되었으면 좋겠습니다!
+      ${SITE_NOTICE_CONTENT.description}
+      <br/> ${SITE_NOTICE_CONTENT.wishPrefix} <strong>${getTodayName()}</strong>${SITE_NOTICE_CONTENT.wishSuffix}
     </p>
     <div class="site-notice-actions">
       <label class="site-notice-check">
         <input type="checkbox" data-site-notice-hide-today />
-        <span>오늘 하루 안보기</span>
+        <span>${SITE_NOTICE_CONTENT.hideTodayLabel}</span>
       </label>
       <button type="button" class="btn btn-success btn-sm" data-site-notice-close>
-        응원하면서 닫기
+        ${SITE_NOTICE_CONTENT.closeLabel}
       </button>
     </div>
   </aside>
